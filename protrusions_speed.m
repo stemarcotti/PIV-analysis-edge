@@ -19,7 +19,7 @@ mu2px = str2double(user_answer{3,1});           % pixel size [um]
 recording_speed = str2double(user_answer{4,1});	% recording speed (frame interval [s])
 recording_speed_min = recording_speed/60;       % recording speed (frame interval [min])
 
-% load interpolated filed
+% load protrusion vectors
 protrusion_vector = load (fullfile ([d '/data'], ['protrusion_vectors_', output_name, '.mat']));
 extensions = protrusion_vector.protrusion;
 normals = protrusion_vector.normals;
