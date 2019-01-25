@@ -27,7 +27,7 @@ smoothed_edge = protrusion_vector.smoothedEdge;
 
 nt = length(extensions);
 
-%% LARGEST AND ALL PROTRUSIONS SPEED %%
+%% LARGEST AND ALL EXTENSIONS SPEED %%
 
 largest_ext_speed_mean = zeros(nt,1);
 all_ext_speed_mean = zeros(nt,1);
