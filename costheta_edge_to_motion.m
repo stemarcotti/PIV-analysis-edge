@@ -6,18 +6,11 @@ d = uigetdir('');
 warning off
 
 % ask the user for an ouput stamp
-prompt = {'Provide a name for the output files',...
-    'Movie ID (n) if file format is cb_(n)_m.tif',...
-    'Pixel size [um]',...
-    'Frame interval [s]'};
+prompt = {'Provide a name for the output files'};
 title = 'Parameters';
 dims = [1 35]; % set input box size
 user_answer = inputdlg(prompt,title,dims); % get user answer
 output_name = (user_answer{1,1});
-cell_ID = str2double(user_answer{2,1});
-mu2px = str2double(user_answer{3,1});           % pixel size [um]
-recording_speed = str2double(user_answer{4,1});	% recording speed (frame interval [s])
-recording_speed_min = recording_speed/60;       % recording speed (frame interval [min])
 
 % load ext coordinates
 unit_vector_all_ext = load(fullfile([d '/data'], ['unit_vector_all_ext_', output_name, '.mat']));
@@ -48,6 +41,7 @@ for k = 1:nt
     
 end
 
+%% SAVE %%
 
 save(fullfile(d, 'data', ...
 ['costheta_largest_ext', output_name,'.mat']), ...
@@ -57,3 +51,4 @@ save(fullfile(d, 'data', ...
 ['costheta_all_ext', output_name,'.mat']), ...
 'costheta_all_ext');
 
+clear
