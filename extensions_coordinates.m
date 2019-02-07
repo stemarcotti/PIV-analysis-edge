@@ -7,12 +7,8 @@ parent_d = uigetdir('');
 
 matlab_folder = cd;
 cd(parent_d)
-listing = dir('**/cb*.tif');
+listing = dir('**/cb*_m.tif');
 cd(matlab_folder)
-
-dilationSize = 4;
-erosionSize = 12;
-connectivityFill = 4;
 
 %% open one file at a time and perform analysis %%
 
@@ -31,17 +27,24 @@ for file_list = 1:n_files
     
     nt = length(imfinfo([directory,'/', file]));
     
-    coord_largest_ext = zeros(nt-1,1);
+    coord_largest_ext = zeros(nt-1,2);
     
     for kk = 1:nt-1
         
         currentFrame = double(imread([directory '/' file],kk))/255;
         nextFrame = double(imread([directory '/' file],kk+1))/255;
         
-        cellOutline1 = detectObjectBw(currentFrame, dilationSize, erosionSize, connectivityFill);
-        cellOutline2 = detectObjectBw(nextFrame, dilationSize, erosionSize, connectivityFill);
+        imbw1 = edge(currentFrame, 'canny');
+        imbw1 = imdilate(imbw1, strel('disk', 4));
+        imbw1 = imfill(imbw1, 'holes');
+        imbw1 = imerode(imbw1, strel('disk', 4));
         
-        im_diff = cellOutline2 - cellOutline1; % 0 if images are the same; -1 if retraction; +1 extension
+        imbw2 = edge(nextFrame, 'canny');
+        imbw2 = imdilate(imbw2, strel('disk', 4));
+        imbw2 = imfill(imbw2, 'holes');
+        imbw2 = imerode(imbw2, strel('disk', 4));
+        
+        im_diff = imbw2 - imbw1; % 0 if images are the same; -1 if retraction; +1 extension
         
         % get extensions
         ext = im_diff;
@@ -62,10 +65,10 @@ for file_list = 1:n_files
         
     end
     
-    save([directory '/data/coord_largest_ext_' output_name '.mat'], 'coord_largest_ext')
-    save([directory '/data/coord_all_ext_' output_name '.mat'], 'coord_all_ext')
+    save([directory '/data/coord_largest_ext_blob_' output_name '.mat'], 'coord_largest_ext')
+    save([directory '/data/coord_all_ext_blob_' output_name '.mat'], 'coord_all_ext')
     
     clear ext data data_area coord_largest_ext coord_all_ext
 end
 
-clear; clc
+% clear; clc
