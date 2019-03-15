@@ -10,7 +10,12 @@ cd(parent_d)
 listing = dir('**/cb*_m.tif');
 cd(matlab_folder)
 
-mu2px = 0.1;
+% ask the user for an ouput stamp
+prompt = {'Pixel length [um]'};
+title = 'Parameters';
+dims = [1 35]; % set input box size
+user_answer = inputdlg(prompt,title,dims); % get user answer
+mu2px = str2double(user_answer{1,1});
 
 %% open one file at a time and perform analysis %%
 

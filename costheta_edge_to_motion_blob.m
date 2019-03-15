@@ -13,9 +13,9 @@ user_answer = inputdlg(prompt,title,dims); % get user answer
 output_name = (user_answer{1,1});
 
 % load ext coordinates
-unit_vector_all_ext = load(fullfile([d '/data'], ['unit_vector_all_ext_', output_name, '.mat']));
+unit_vector_all_ext = load(fullfile([d '/data'], ['unit_vector_all_ext_blob_', output_name, '.mat']));
 unit_vector_all_ext = unit_vector_all_ext.resultant_all_ext;
-unit_vector_largest_ext = load(fullfile([d '/data'], ['unit_vector_largest_ext_', output_name, '.mat']));
+unit_vector_largest_ext = load(fullfile([d '/data'], ['unit_vector_largest_ext_blob_', output_name, '.mat']));
 unit_vector_largest_ext = unit_vector_largest_ext.resultant_largest_ext;
 
 % load cell tracking
@@ -44,11 +44,11 @@ end
 %% SAVE %%
 
 save(fullfile(d, 'data', ...
-['costheta_largest_ext', output_name,'.mat']), ...
+['costheta_largest_ext_blob_', output_name,'.mat']), ...
 'costheta_largest_ext');
 
 save(fullfile(d, 'data', ...
-['costheta_all_ext', output_name,'.mat']), ...
+['costheta_all_ext_blob_', output_name,'.mat']), ...
 'costheta_all_ext');
 
 clear
