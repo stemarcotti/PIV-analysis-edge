@@ -71,4 +71,4 @@ for file_list = 1:n_files
     clear ext data data_area coord_largest_ext coord_all_ext
 end
 
-% clear; clc
+clear; clc
