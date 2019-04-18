@@ -13,10 +13,10 @@ user_answer = inputdlg(prompt,title,dims); % get user answer
 output_name = (user_answer{1,1});
 
 % load ext coordinates
-unit_vector_all_ext = load(fullfile([d '/data'], ['unit_vector_all_ext_blob_', output_name, '.mat']));
-unit_vector_all_ext = unit_vector_all_ext.resultant_all_ext;
+% unit_vector_all_ext = load(fullfile([d '/data'], ['unit_vector_all_ext_blob_', output_name, '.mat']));
+% unit_vector_all_ext = unit_vector_all_ext.resultant_all_ext;
 unit_vector_largest_ext = load(fullfile([d '/data'], ['unit_vector_largest_ext_blob_', output_name, '.mat']));
-unit_vector_largest_ext = unit_vector_largest_ext.resultant_largest_ext;
+unit_vector_largest_ext = unit_vector_largest_ext.largest_ext_unit;
 
 % load cell tracking
 track = load(fullfile([d '/data'], ['cell_track_', output_name, '.mat']));
@@ -29,15 +29,15 @@ nt = length(track_diff);
 
 %% %%
 costheta_largest_ext = zeros(nt,1);
-costheta_all_ext = zeros(nt,1);
+% costheta_all_ext = zeros(nt,1);
 
 for k = 1:nt
     
     costheta_largest_ext(k,1) = dot(unit_vector_largest_ext(k,:), track_diff(k,:)) ./...
         (norm(unit_vector_largest_ext(k,:)) * norm(track_diff(k,:)));
     
-    costheta_all_ext(k,1) = dot(unit_vector_all_ext(k,:), track_diff(k,:)) ./...
-        (norm(unit_vector_all_ext(k,:)) * norm(track_diff(k,:)));
+%     costheta_all_ext(k,1) = dot(unit_vector_all_ext(k,:), track_diff(k,:)) ./...
+%         (norm(unit_vector_all_ext(k,:)) * norm(track_diff(k,:)));
     
 end
 
@@ -47,8 +47,8 @@ save(fullfile(d, 'data', ...
 ['costheta_largest_ext_blob_', output_name,'.mat']), ...
 'costheta_largest_ext');
 
-save(fullfile(d, 'data', ...
-['costheta_all_ext_blob_', output_name,'.mat']), ...
-'costheta_all_ext');
+% save(fullfile(d, 'data', ...
+% ['costheta_all_ext_blob_', output_name,'.mat']), ...
+% 'costheta_all_ext');
 
 clear
